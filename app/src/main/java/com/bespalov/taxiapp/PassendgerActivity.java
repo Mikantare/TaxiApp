@@ -39,6 +39,7 @@ public class PassendgerActivity extends AppCompatActivity {
     private DatabaseReference usersDataBaseReference;
 
     private String key;
+    private String newName;
 
 
     @Override
@@ -52,6 +53,9 @@ public class PassendgerActivity extends AppCompatActivity {
         usersDataBaseReference = FirebaseDatabase.getInstance().getReference().child("users");
 
         attachUserDataBaseReferenceListener();
+//        Intent intent = getIntent();
+//        newName = intent.getStringExtra("userName");
+
 
 
     }
@@ -79,8 +83,8 @@ public class PassendgerActivity extends AppCompatActivity {
                         RC_IMAGE_PICKER);
                 return true;
             case R.id.edit_user_name:
+                usersDataBaseReference.child(key).child("name").setValue(newName);
 
-                Toast.makeText(this, "Пока не доделал функционал", Toast.LENGTH_LONG).show();
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -98,8 +102,6 @@ public class PassendgerActivity extends AppCompatActivity {
                     if (!user.getId().equals(mAuth.getCurrentUser().getUid())) {
                     } else {
                         key = snapshot.getKey();
-
-                        Log.d("MyKey", "" + key.toString());
                     }
                 }
 
