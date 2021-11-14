@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChosseModeActivity">
+
+    <ImageView
+        android:src="@drawable/taxi_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        />
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_marginTop="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/taxi_app_name"
+        android:textStyle="bold"
+        android:textSize="50dp"
+        android:textColor="#FFEB3B"
+        android:gravity="center"
+        />
+
+    <Button
+        android:id="@+id/passagerButtont"
+        android:onClick="goToPassangerSinIn"
+        android:text="@string/passnager_button_mode"
+        android:textSize="20sp"
+        android:textColor="#FFEB3B"
+        android:backgroundTint="#29602B"
+        android:layout_marginTop="200dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/driverButtont"
+
+        android:onClick="goToDriverSinIn"
+        android:text="@string/driver_button_mode"
+        android:textSize="20sp"
+        android:textColor="#29602B"
+        android:backgroundTint="#FFEB3B"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
+    </FrameLayout>
