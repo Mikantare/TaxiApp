@@ -21,7 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
-public class PesengerSignInActivity extends AppCompatActivity {
+public class PassengerSignInActivity extends AppCompatActivity {
 
     private static final String TAG = "SigninMetod";
 
@@ -42,7 +42,7 @@ public class PesengerSignInActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         usersDataBaseReference = database.getReference().child("users");
 
-        setContentView(R.layout.activity_pesenger_sign_in);
+        setContentView(R.layout.activity_passenger_sign_in);
         textInputEmail = findViewById(R.id.textInputEmail);
         textInputName = findViewById(R.id.textInputName);
         textInputPassword = findViewById(R.id.textInputPassword);
@@ -51,6 +51,14 @@ public class PesengerSignInActivity extends AppCompatActivity {
         toogleLoginSignUpTextView = findViewById(R.id.toogleLoginSignUpTextView);
 
 
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        if (mAuth.getCurrentUser() != null) {
+            startActivity(new Intent(PassengerSignInActivity.this, PassendgerActivity.class));
+        }
     }
 
     private boolean valideteEmail() {
@@ -120,6 +128,7 @@ public class PesengerSignInActivity extends AppCompatActivity {
         String email = textInputEmail.getEditText().getText().toString().trim();
         String password = textInputPassword.getEditText().getText().toString().trim();
         String name = textInputName.getEditText().getText().toString().trim();
+        boolean isPassandger = true;
 
         if (isLogInModeActive) {
             if (!valideteEmail() | !valideteName() | !validetePasswordLogIn()) {
@@ -133,13 +142,13 @@ public class PesengerSignInActivity extends AppCompatActivity {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d(TAG, "signInWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
-                                    Intent intent = new Intent(PesengerSignInActivity.this, ChosseModeActivity.class);
+                                    Intent intent = new Intent(PassengerSignInActivity.this, PassendgerActivity.class);
                                     intent.putExtra("userName", name);
                                     startActivity(intent);
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                    Toast.makeText(PesengerSignInActivity.this, "Authentication failed.",
+                                    Toast.makeText(PassengerSignInActivity.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -157,14 +166,14 @@ public class PesengerSignInActivity extends AppCompatActivity {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d(TAG, "createUserWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
-                                    createUser(user, email, name, password);
-                                    Intent intent = new Intent(PesengerSignInActivity.this, SplashScrennActivity.class);
+                                    createUser(user, email, name, password, isPassandger);
+                                    Intent intent = new Intent(PassengerSignInActivity.this, PassendgerActivity.class);
                                     intent.putExtra("userName", name);
                                     startActivity(intent);
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                    Toast.makeText(PesengerSignInActivity.this, "Authentication failed.",
+                                    Toast.makeText(PassengerSignInActivity.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
                                 }
 
@@ -174,11 +183,12 @@ public class PesengerSignInActivity extends AppCompatActivity {
         }
     }
 
-    private void createUser(FirebaseUser firebaseUser, String email, String name, String password) {
+    private void createUser(FirebaseUser firebaseUser, String email, String name, String password, boolean isPassendger) {
         User user = new User();
         user.setId(firebaseUser.getUid());
         user.setEmail(firebaseUser.getEmail());
         user.setName(name);
+        user.setPassenger(isPassendger);
         usersDataBaseReference.push().setValue(user);
     }
 

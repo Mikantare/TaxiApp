@@ -7,15 +7,25 @@ public class User {
     private String email;
     private String id;
     private String userPhotoUri;
+    private boolean isPassenger;
 
     public User() {
     }
 
-    public User(String name, String email, String id, String userPhotoUri) {
+    public User(String name, String email, String id, String userPhotoUri, boolean isPassenger) {
         this.name = name;
         this.email = email;
         this.id = id;
         this.userPhotoUri = userPhotoUri;
+        this.isPassenger = isPassenger;
+    }
+
+    public boolean isPassenger() {
+        return isPassenger;
+    }
+
+    public void setPassenger(boolean passenger) {
+        isPassenger = passenger;
     }
 
     public String getName() {

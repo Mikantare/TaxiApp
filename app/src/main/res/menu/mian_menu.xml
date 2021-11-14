@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/sing_out"
+        android:title="Sign Out"
+        app:showAsAction="never"/>
+    <item android:title="add user photo"
+        android:id="@+id/add_user_photo"
+        app:showAsAction="never"
+        />
+    <item android:title="edit user name"
+        android:id="@+id/edit_user_name"
+        app:showAsAction="never"
+        />
+
+</menu>
