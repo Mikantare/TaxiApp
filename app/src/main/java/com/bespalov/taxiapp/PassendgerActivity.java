@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -41,6 +43,8 @@ public class PassendgerActivity extends AppCompatActivity {
     private String key;
     private String newName;
 
+    private DialogFragment dialogFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +57,6 @@ public class PassendgerActivity extends AppCompatActivity {
         usersDataBaseReference = FirebaseDatabase.getInstance().getReference().child("users");
 
         attachUserDataBaseReferenceListener();
-//        Intent intent = getIntent();
-//        newName = intent.getStringExtra("userName");
 
 
 
@@ -85,12 +87,16 @@ public class PassendgerActivity extends AppCompatActivity {
             case R.id.edit_user_name:
                 usersDataBaseReference.child(key).child("name").setValue(newName);
 
+                dialogFragment = new DialogNewName();
+                dialogFragment.show(getSupportFragmentManager(),"dialogFragment");
+
 
             default:
                 return super.onOptionsItemSelected(item);
         }
 
     }
+
 
     private void attachUserDataBaseReferenceListener() {
         usersDataBaseReference = FirebaseDatabase.getInstance().getReference().child("users");
@@ -165,4 +171,5 @@ public class PassendgerActivity extends AppCompatActivity {
                     }
                 }
 
-            }
+
+}
