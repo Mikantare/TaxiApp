@@ -63,7 +63,8 @@ public class PassendgerActivity extends AppCompatActivity implements DialogNewNa
 
     @Override
     public void onFinishEditDialog(String inputText) {
-//        usersDataBaseReference.child(key).child("name").setValue(inputText);
+
+        usersDataBaseReference.child(key).child("name").setValue(inputText);
     }
 
     @Override

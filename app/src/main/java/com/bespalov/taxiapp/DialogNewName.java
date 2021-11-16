@@ -35,12 +35,12 @@ public class DialogNewName extends DialogFragment implements View.OnClickListene
 
 
     public void onClick(View v) {
-
-        String name = editTextViewFolderDialog.getText().toString().trim();
-        if (!name.equals("")) {
-            listener.onFinishEditDialog(name);
+       String newName = editTextViewFolderDialog.getText().toString().trim();
+        if (!newName.equals("")) {
+            listener.onFinishEditDialog("Andrey");
+            this.dismiss();
         }
-        Log.d(LOG_TAG, "Dialog 1: " + ((Button) v).getText() + name);
+        Log.d(LOG_TAG, "Dialog 1: " + ((Button) v).getText() + newName);
         dismiss();
     }
 
