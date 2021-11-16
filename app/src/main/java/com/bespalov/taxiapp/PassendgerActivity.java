@@ -29,7 +29,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-public class PassendgerActivity extends AppCompatActivity {
+public class PassendgerActivity extends AppCompatActivity implements DialogNewName.EditNameDialogListener {
 
     private FirebaseAuth mAuth;
     private static final int RC_IMAGE_PICKER = 321;
@@ -41,7 +41,6 @@ public class PassendgerActivity extends AppCompatActivity {
     private DatabaseReference usersDataBaseReference;
 
     private String key;
-    private String newName;
 
     private DialogFragment dialogFragment;
 
@@ -62,6 +61,10 @@ public class PassendgerActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onFinishEditDialog(String inputText) {
+//        usersDataBaseReference.child(key).child("name").setValue(inputText);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -85,11 +88,10 @@ public class PassendgerActivity extends AppCompatActivity {
                         RC_IMAGE_PICKER);
                 return true;
             case R.id.edit_user_name:
-                usersDataBaseReference.child(key).child("name").setValue(newName);
+
 
                 dialogFragment = new DialogNewName();
                 dialogFragment.show(getSupportFragmentManager(),"dialogFragment");
-
 
             default:
                 return super.onOptionsItemSelected(item);

@@ -15,6 +15,7 @@ import androidx.fragment.app.DialogFragment;
 public class DialogNewName extends DialogFragment implements View.OnClickListener {
 
     private EditNameDialogListener listener;
+
     final String LOG_TAG = "myLogsDialog";
     private EditText editTextViewFolderDialog;
 
