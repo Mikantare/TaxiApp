@@ -44,7 +44,6 @@ public class PassendgerActivity extends AppCompatActivity implements DialogNewNa
 
     private DialogFragment dialogFragment;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,14 +55,10 @@ public class PassendgerActivity extends AppCompatActivity implements DialogNewNa
         usersDataBaseReference = FirebaseDatabase.getInstance().getReference().child("users");
 
         attachUserDataBaseReferenceListener();
-
-
-
     }
 
     @Override
     public void onFinishEditDialog(String inputText) {
-
         usersDataBaseReference.child(key).child("name").setValue(inputText);
     }
 

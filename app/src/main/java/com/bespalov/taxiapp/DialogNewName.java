@@ -16,7 +16,6 @@ public class DialogNewName extends DialogFragment implements View.OnClickListene
 
     private EditNameDialogListener listener;
 
-    final String LOG_TAG = "myLogsDialog";
     private EditText editTextViewFolderDialog;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,6 +25,7 @@ public class DialogNewName extends DialogFragment implements View.OnClickListene
         editTextViewFolderDialog = v.findViewById(R.id.editTextViewFolderDialog);
         v.findViewById(R.id.btnYes).setOnClickListener(this);
         v.findViewById(R.id.btnNo).setOnClickListener(this);
+        listener = (EditNameDialogListener)getActivity();
         return v;
     }
 
@@ -36,21 +36,17 @@ public class DialogNewName extends DialogFragment implements View.OnClickListene
 
     public void onClick(View v) {
        String newName = editTextViewFolderDialog.getText().toString().trim();
-        if (!newName.equals("")) {
-            listener.onFinishEditDialog("Andrey");
-            this.dismiss();
-        }
-        Log.d(LOG_TAG, "Dialog 1: " + ((Button) v).getText() + newName);
-        dismiss();
+       if (((Button) v).getText().equals("yes")) {
+           listener.onFinishEditDialog(newName);
+       }
+               dismiss();
     }
 
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        Log.d(LOG_TAG, "Dialog 1: onDismiss");
     }
 
     public void onCancel(DialogInterface dialog) {
         super.onCancel(dialog);
-        Log.d(LOG_TAG, "Dialog 1: onCancel");
     }
 }

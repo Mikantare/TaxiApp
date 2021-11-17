@@ -34,6 +34,7 @@ public class PassengerSignInActivity extends AppCompatActivity {
     private TextView toogleLoginSignUpTextView;
 
     private boolean isLogInModeActive;
+     private boolean isPassandger = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,10 +129,10 @@ public class PassengerSignInActivity extends AppCompatActivity {
         String email = textInputEmail.getEditText().getText().toString().trim();
         String password = textInputPassword.getEditText().getText().toString().trim();
         String name = textInputName.getEditText().getText().toString().trim();
-        boolean isPassandger = true;
+
 
         if (isLogInModeActive) {
-            if (!valideteEmail() | !valideteName() | !validetePasswordLogIn()) {
+            if (!valideteEmail()  | !validetePasswordLogIn()) {
                 return;
             } else {
                 mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this,
@@ -198,11 +199,13 @@ public class PassengerSignInActivity extends AppCompatActivity {
             loginSignInButton.setText("Sign Up");
             toogleLoginSignUpTextView.setText("Or, log in");
             textComfirmPassword.setVisibility(View.VISIBLE);
+            textInputName.setVisibility(View.VISIBLE);
         } else {
             isLogInModeActive = true;
             loginSignInButton.setText("Log In");
             toogleLoginSignUpTextView.setText("or, Sign Up");
             textComfirmPassword.setVisibility(View.INVISIBLE);
+            textInputName.setVisibility(View.GONE);
         }
     }
 }

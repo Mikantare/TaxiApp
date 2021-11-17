@@ -3,4 +3,5 @@
     <string name="taxi_app_name">TAXI APP</string>
     <string name="passnager_button_mode">I\'m a passanger</string>
     <string name="driver_button_mode">I\'m a driver</string>
+    <string name="title_activity_drivers_maps">DriversMapsActivity</string>
 </resources>
