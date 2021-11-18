@@ -1,5 +1,7 @@
 package com.bespalov.taxiapp;
 
+import com.firebase.geofire.GeoFire;
+
 public class User {
 
 
@@ -12,7 +14,7 @@ public class User {
     public User() {
     }
 
-    public User(String name, String email, String id, String userPhotoUri, boolean isPassenger) {
+    public User(String name, String email, String id, String userPhotoUri, boolean isPassenger, GeoFire geoFire) {
         this.name = name;
         this.email = email;
         this.id = id;

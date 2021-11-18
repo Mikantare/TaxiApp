@@ -22,6 +22,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -45,6 +47,14 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -53,6 +63,10 @@ public class DriversMapsActivity extends FragmentActivity implements OnMapReadyC
 
     private GoogleMap mMap;
     private ActivityDriversMapsBinding binding;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference usersDataBaseReference;
+    private GeoFire geoFire;
 
     private static final int CHECK_SETTINGS_CODE = 123;
     private static final int REQUEST_LOCATION_PERMISSION = 321;
@@ -64,15 +78,25 @@ public class DriversMapsActivity extends FragmentActivity implements OnMapReadyC
     private LocationSettingsRequest locationSettingsRequest;
     private LocationCallback locationCallback;
     private Location currentLocation;
+    private String driverUserId;
+
+    private Button buttonSingOut, buttonSetting;
 
     private boolean isLocationUpdateActive;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityDriversMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        buttonSingOut = findViewById(R.id.buttonSingOut);
+        buttonSetting = findViewById(R.id.buttonSetting);
+
+        mAuth = FirebaseAuth.getInstance();
+        usersDataBaseReference = FirebaseDatabase.getInstance().getReference().child("userLocations");
+        geoFire = new GeoFire(usersDataBaseReference);
+        driverUserId = mAuth.getCurrentUser().getUid();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -86,8 +110,6 @@ public class DriversMapsActivity extends FragmentActivity implements OnMapReadyC
         buildLocationCallBack();
         buildLocationSettingsRequest();
         startLocationUpdate();
-
-
     }
 
     /**
@@ -109,6 +131,8 @@ public class DriversMapsActivity extends FragmentActivity implements OnMapReadyC
             Toast.makeText(this, "" + currentLocation.getLatitude(), Toast.LENGTH_LONG).show();
             mMap.addMarker(new MarkerOptions().position(myCurentLocation).title("your here"));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(myCurentLocation));
+
+
         }
     }
 
@@ -227,6 +251,8 @@ public class DriversMapsActivity extends FragmentActivity implements OnMapReadyC
             mMap.addMarker(new MarkerOptions().position(myCurentLocation).title("your here"));
 
 
+            geoFire.setLocation(driverUserId, new GeoLocation(currentLocation.getLatitude(),
+                    currentLocation.getLongitude()));
         }
     }
 
@@ -320,5 +346,11 @@ public class DriversMapsActivity extends FragmentActivity implements OnMapReadyC
     private boolean checkLocationPrmission() {
         int permissionState = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
         return permissionState == PackageManager.PERMISSION_GRANTED;
+    }
+
+
+    public void SignOut(View view) {
+        mAuth.signOut();
+
     }
 }

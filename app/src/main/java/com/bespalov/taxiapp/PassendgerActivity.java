@@ -37,7 +37,6 @@ public class PassendgerActivity extends AppCompatActivity implements DialogNewNa
     private FirebaseStorage storage;
     private StorageReference imageStorageRef;
     private ChildEventListener usersChildEventListener;
-
     private DatabaseReference usersDataBaseReference;
 
     private String key;
@@ -84,11 +83,9 @@ public class PassendgerActivity extends AppCompatActivity implements DialogNewNa
                         RC_IMAGE_PICKER);
                 return true;
             case R.id.edit_user_name:
-
-
                 dialogFragment = new DialogNewName();
                 dialogFragment.show(getSupportFragmentManager(),"dialogFragment");
-
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -97,7 +94,6 @@ public class PassendgerActivity extends AppCompatActivity implements DialogNewNa
 
 
     private void attachUserDataBaseReferenceListener() {
-        usersDataBaseReference = FirebaseDatabase.getInstance().getReference().child("users");
         if (usersChildEventListener == null) {
             usersChildEventListener = new ChildEventListener() {
                 @Override
