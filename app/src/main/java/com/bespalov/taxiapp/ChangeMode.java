@@ -1,5 +1,7 @@
 package com.bespalov.taxiapp;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -15,29 +17,31 @@ public class ChangeMode {
     private FirebaseAuth mAuth;
     private ChildEventListener usersChildEventListener;
     private DatabaseReference usersDataBaseReference;
-    private String key;
 
 
-    private void accessAFireBase() {
+    private void accessAFireBase(Boolean isPasseng) {
         mAuth = FirebaseAuth.getInstance();
         usersDataBaseReference = FirebaseDatabase.getInstance().getReference().child("users");
-        attachUserDataBaseReferenceListener();
+        attachUserDataBaseReferenceListener(isPasseng);
     }
 
     public ChangeMode changeModeIsPassenger (Boolean isPassenger) {
-        accessAFireBase();
+        accessAFireBase(isPassenger);
         return null;
     }
 
-    private void attachUserDataBaseReferenceListener() {
+    private void attachUserDataBaseReferenceListener(Boolean isPassenger) {
+        Log.d("ChangeMode", "В начало пришел");
         if (usersChildEventListener == null) {
             usersChildEventListener = new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     User user = snapshot.getValue(User.class);
+                    Log.d("ChangeMode", "В начало пришел1");
                     if (!user.getId().equals(mAuth.getCurrentUser().getUid())) {
                     } else {
-                        usersDataBaseReference.child(snapshot.getKey()).child("passenger").setValue(key);
+                        usersDataBaseReference.child(snapshot.getKey()).child("passenger").setValue(isPassenger);
+                        Log.d("ChangeMode", "В начало пришел2");
                     }
                 }
 
