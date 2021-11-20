@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,12 +17,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 public class ChosseModeActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private FirebaseStorage storage;
 
     private ChildEventListener usersChildEventListener;
 
@@ -29,16 +28,21 @@ public class ChosseModeActivity extends AppCompatActivity {
 
     private Boolean isPassenger;
 
+    private Button driverButtont, passagerButtont;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_mode);
+        driverButtont = findViewById(R.id.driverButtont);
+        passagerButtont = findViewById(R.id.passagerButtont);
 
-        storage = FirebaseStorage.getInstance();
 
         mAuth = FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser() != null) {
             attachUserDataBaseReferenceListener();
+            driverButtont.setVisibility(View.GONE);
+            passagerButtont.setVisibility(View.GONE);
         }
 
     }
@@ -51,7 +55,8 @@ public class ChosseModeActivity extends AppCompatActivity {
         startActivity(new Intent(ChosseModeActivity.this, DriverSignInActivity.class));
     }
 
-    private void attachUserDataBaseReferenceListener() {
+    private void
+    attachUserDataBaseReferenceListener() {
         usersDataBaseReference = FirebaseDatabase.getInstance().getReference().child("users");
         if (usersChildEventListener == null) {
             usersChildEventListener = new ChildEventListener() {
@@ -63,12 +68,11 @@ public class ChosseModeActivity extends AppCompatActivity {
                          isPassenger = snapshot.child("passenger").getValue(Boolean.TYPE);
                         if (mAuth.getCurrentUser() != null) {
                             if (isPassenger) {
-                                startActivity(new Intent(ChosseModeActivity.this, PassendgerActivity.class));}
+                                startActivity(new Intent(ChosseModeActivity.this, PassengerMapsActivity.class));}
                             else {
                                 startActivity(new Intent(ChosseModeActivity.this, DriversMapsActivity.class));
                             }
                         }
-                        Toast.makeText(ChosseModeActivity.this, "" + isPassenger, Toast.LENGTH_LONG).show();
                     }
                 }
 

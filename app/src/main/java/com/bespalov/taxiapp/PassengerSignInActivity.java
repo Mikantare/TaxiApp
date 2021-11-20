@@ -1,6 +1,7 @@
 package com.bespalov.taxiapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -17,6 +18,9 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -34,7 +38,7 @@ public class PassengerSignInActivity extends AppCompatActivity {
     private TextView toogleLoginSignUpTextView;
 
     private boolean isLogInModeActive;
-     private boolean isPassandger = true;
+    private boolean isPassanger = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +62,7 @@ public class PassengerSignInActivity extends AppCompatActivity {
     protected void onPostResume() {
         super.onPostResume();
         if (mAuth.getCurrentUser() != null) {
-            startActivity(new Intent(PassengerSignInActivity.this, PassendgerActivity.class));
+            startActivity(new Intent(PassengerSignInActivity.this, PassengerMapsActivity.class));
         }
     }
 
@@ -132,7 +136,7 @@ public class PassengerSignInActivity extends AppCompatActivity {
 
 
         if (isLogInModeActive) {
-            if (!valideteEmail()  | !validetePasswordLogIn()) {
+            if (!valideteEmail() | !validetePasswordLogIn()) {
                 return;
             } else {
                 mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this,
@@ -143,8 +147,7 @@ public class PassengerSignInActivity extends AppCompatActivity {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d(TAG, "signInWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
-                                    Intent intent = new Intent(PassengerSignInActivity.this, PassendgerActivity.class);
-                                    intent.putExtra("userName", name);
+                                    Intent intent = new Intent(PassengerSignInActivity.this, PassengerMapsActivity.class);
                                     startActivity(intent);
                                 } else {
                                     // If sign in fails, display a message to the user.
@@ -167,8 +170,8 @@ public class PassengerSignInActivity extends AppCompatActivity {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d(TAG, "createUserWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
-                                    createUser(user, email, name, password, isPassandger);
-                                    Intent intent = new Intent(PassengerSignInActivity.this, PassendgerActivity.class);
+                                    createUser(user, email, name, password, isPassanger);
+                                    Intent intent = new Intent(PassengerSignInActivity.this, PassengerMapsActivity.class);
                                     intent.putExtra("userName", name);
                                     startActivity(intent);
                                 } else {
@@ -208,4 +211,6 @@ public class PassengerSignInActivity extends AppCompatActivity {
             textInputName.setVisibility(View.GONE);
         }
     }
+
+
 }

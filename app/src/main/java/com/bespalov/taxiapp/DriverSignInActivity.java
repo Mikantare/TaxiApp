@@ -49,6 +49,8 @@ public class DriverSignInActivity extends AppCompatActivity {
         textInputConfirmPassword = findViewById(R.id.textInputConfirmPassword);
         loginSignInButton = findViewById(R.id.loginSignInButton);
         toogleLoginSignUpTextView = findViewById(R.id.toogleLoginSignUpTextView);
+        Toast.makeText(this, "Ваш профиль водитель", Toast.LENGTH_SHORT).show();
+        ChangeMode changeMode = new ChangeMode().changeModeIsPassenger(false);
 
 
     }
@@ -143,7 +145,6 @@ public class DriverSignInActivity extends AppCompatActivity {
                                     Log.d(TAG, "signInWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     Intent intent = new Intent(DriverSignInActivity.this, DriversMapsActivity.class);
-                                    intent.putExtra("userName", name);
                                     startActivity(intent);
                                 } else {
                                     // If sign in fails, display a message to the user.

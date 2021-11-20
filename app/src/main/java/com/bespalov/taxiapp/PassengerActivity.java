@@ -2,19 +2,15 @@ package com.bespalov.taxiapp;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,7 +25,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-public class PassendgerActivity extends AppCompatActivity implements DialogNewName.EditNameDialogListener {
+public class PassengerActivity extends AppCompatActivity implements DialogNewName.EditNameDialogListener {
 
     private FirebaseAuth mAuth;
     private static final int RC_IMAGE_PICKER = 321;
@@ -73,7 +69,7 @@ public class PassendgerActivity extends AppCompatActivity implements DialogNewNa
         switch (item.getItemId()) {
             case R.id.sing_out:
                 mAuth.signOut();
-                startActivity(new Intent(PassendgerActivity.this, ChosseModeActivity.class));
+                startActivity(new Intent(PassengerActivity.this, ChosseModeActivity.class));
                 return true;
             case R.id.add_user_photo:
                 Intent intentToImage = new Intent(Intent.ACTION_GET_CONTENT);
