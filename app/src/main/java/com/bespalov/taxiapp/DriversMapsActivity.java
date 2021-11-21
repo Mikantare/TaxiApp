@@ -110,6 +110,9 @@ public class DriversMapsActivity extends FragmentActivity implements OnMapReadyC
         buildLocationCallBack();
         buildLocationSettingsRequest();
         startLocationUpdate();
+
+
+        ChangeMode changeMode = new ChangeMode().changeModeIsPassenger(false);
     }
 
     /**

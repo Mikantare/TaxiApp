@@ -25,23 +25,20 @@ public class ChangeMode {
         attachUserDataBaseReferenceListener(isPasseng);
     }
 
-    public ChangeMode changeModeIsPassenger (Boolean isPassenger) {
+    public ChangeMode changeModeIsPassenger(Boolean isPassenger) {
         accessAFireBase(isPassenger);
         return null;
     }
 
     private void attachUserDataBaseReferenceListener(Boolean isPassenger) {
-        Log.d("ChangeMode", "В начало пришел");
         if (usersChildEventListener == null) {
             usersChildEventListener = new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     User user = snapshot.getValue(User.class);
-                    Log.d("ChangeMode", "В начало пришел1");
                     if (!user.getId().equals(mAuth.getCurrentUser().getUid())) {
                     } else {
                         usersDataBaseReference.child(snapshot.getKey()).child("passenger").setValue(isPassenger);
-                        Log.d("ChangeMode", "В начало пришел2");
                     }
                 }
 

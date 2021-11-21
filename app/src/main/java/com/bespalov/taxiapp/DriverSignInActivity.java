@@ -49,10 +49,6 @@ public class DriverSignInActivity extends AppCompatActivity {
         textInputConfirmPassword = findViewById(R.id.textInputConfirmPassword);
         loginSignInButton = findViewById(R.id.loginSignInButton);
         toogleLoginSignUpTextView = findViewById(R.id.toogleLoginSignUpTextView);
-        Toast.makeText(this, "Ваш профиль водитель", Toast.LENGTH_SHORT).show();
-        ChangeMode changeMode = new ChangeMode().changeModeIsPassenger(false);
-
-
     }
 
     @Override
