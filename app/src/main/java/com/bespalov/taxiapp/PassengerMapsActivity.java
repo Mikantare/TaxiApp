@@ -25,6 +25,7 @@ import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
 import com.firebase.geofire.GeoQueryDataEventListener;
+import com.firebase.geofire.GeoQueryEventListener;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -121,37 +122,36 @@ public class PassengerMapsActivity extends FragmentActivity implements OnMapRead
             public void onClick(View view) {
                 buttonBookTaxi.setText("Getting your taxi...");
                 gettingNearestTaxi();
+                Log.d("driverId", "Начало");
             }
         });
     }
 
     private void gettingNearestTaxi() {
+        Log.d("driverId", "Начало1");
         GeoFire geoFireDrivers = new GeoFire(driversRef);
         GeoQuery geoQuery = geoFireDrivers.queryAtLocation(new GeoLocation(currentLocation.getLatitude(),
                 currentLocation.getLongitude()), searchRadius );
         geoQuery.removeAllListeners();
 
-        geoQuery.addGeoQueryDataEventListener(new GeoQueryDataEventListener() {
+        geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
-            public void onDataEntered(DataSnapshot dataSnapshot, GeoLocation location) {
+            public void onKeyEntered(String key, GeoLocation location) {
+                Log.d("driverId", "Начало2");
                 if (!isDriverFound) {
                     isDriverFound = true;
-                    nearestDriverId = dataSnapshot.getKey();
+                    nearestDriverId = key;
+                    Log.d("driverId", ""+key);
                 }
             }
 
             @Override
-            public void onDataExited(DataSnapshot dataSnapshot) {
+            public void onKeyExited(String key) {
 
             }
 
             @Override
-            public void onDataMoved(DataSnapshot dataSnapshot, GeoLocation location) {
-
-            }
-
-            @Override
-            public void onDataChanged(DataSnapshot dataSnapshot, GeoLocation location) {
+            public void onKeyMoved(String key, GeoLocation location) {
 
             }
 
@@ -161,7 +161,6 @@ public class PassengerMapsActivity extends FragmentActivity implements OnMapRead
                     searchRadius++;
                     gettingNearestTaxi();
                 }
-
             }
 
             @Override
@@ -169,6 +168,7 @@ public class PassengerMapsActivity extends FragmentActivity implements OnMapRead
 
             }
         });
+
     }
 
     /**
